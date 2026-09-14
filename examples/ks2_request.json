@@ -1,0 +1,50 @@
+{
+  "header": {
+    "investor": {"name": "АО «Инвестор»", "okpo": "12345678"},
+    "customer": {
+      "name": "ООО «Заказчик»",
+      "address": "г. Москва, ул. Тверская, д. 1",
+      "phone": "+7 495 000-00-00",
+      "okpo": "87654321",
+      "inn": "7701234567",
+      "kpp": "770101001"
+    },
+    "contractor": {
+      "name": "ООО «Подрядчик»",
+      "address": "г. Москва, ул. Строителей, д. 5",
+      "phone": "+7 495 111-11-11",
+      "okpo": "11223344"
+    },
+    "construction_site": "Жилой комплекс «Северный», г. Москва, ул. Полярная, д. 10",
+    "facility": "Корпус 1",
+    "okdp": "4520",
+    "contract": {"number": "СМР-15/2026", "date": "2026-01-15"}
+  },
+  "document_number": "1",
+  "document_date": "2026-03-31",
+  "period": {"start": "2026-03-01", "end": "2026-03-31"},
+  "contract_cost": "5000000.00",
+  "vat_mode": "charged",
+  "vat_rate": "20",
+  "items": [
+    {
+      "estimate_position": "1-1",
+      "name": "Устройство монолитных железобетонных стен",
+      "unit_rate_number": "ФЕР06-01-015-01",
+      "unit": "м3",
+      "quantity": "125.5",
+      "unit_price": "8450.75"
+    },
+    {
+      "estimate_position": "1-2",
+      "name": "Кладка наружных стен из керамического кирпича",
+      "unit_rate_number": "ФЕР08-02-001-01",
+      "unit": "м3",
+      "quantity": "48.25",
+      "unit_price": "6120.40",
+      "coefficient": "1.15"
+    }
+  ],
+  "signed_by_contractor": "Производитель работ Иванов И.И.",
+  "signed_by_customer": "Технический заказчик Петров П.П."
+}

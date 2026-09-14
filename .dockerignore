@@ -1,0 +1,7 @@
+.git/
+.venv/
+tests/
+examples/
+data/
+__pycache__/
+*.sqlite3

@@ -1,0 +1,10 @@
+{
+  "act_ids": ["<id акта КС-2 за март>", "<id акта КС-2 за апрель>"],
+  "document_number": "2",
+  "document_date": "2026-04-30",
+  "group_by": "facility",
+  "previous_certificate_id": "<id предыдущей справки КС-3, если есть>",
+  "opening_balances": [
+    {"name": "Корпус 1", "cost_from_start": "12500000.00", "cost_from_year_start": "3400000.00"}
+  ]
+}
