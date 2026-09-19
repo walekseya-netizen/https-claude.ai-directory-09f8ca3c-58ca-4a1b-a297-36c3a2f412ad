@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.api import health, ks2, ks3
+from app.api.security import api_key_middleware, api_key_scheme
 from app.config import Settings, get_settings
 from app.domain.errors import DomainError, NotFoundError
 from app.storage.repository import DocumentRepository
@@ -44,9 +45,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         lifespan=lifespan,
     )
 
+    application.state.settings = settings
+    application.middleware("http")(api_key_middleware)
+
     application.include_router(health.router)
-    application.include_router(ks2.router)
-    application.include_router(ks3.router)
+    application.include_router(ks2.router, dependencies=[Depends(api_key_scheme)])
+    application.include_router(ks3.router, dependencies=[Depends(api_key_scheme)])
 
     @application.exception_handler(NotFoundError)
     async def _not_found(_: Request, exc: NotFoundError) -> JSONResponse:

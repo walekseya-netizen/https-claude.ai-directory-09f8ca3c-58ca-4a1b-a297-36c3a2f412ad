@@ -1,0 +1,22 @@
+# Запуск на своём сервере: docker compose up -d
+services:
+  ks-service:
+    build: .
+    image: ks-service:latest
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      KS_DATABASE_PATH: /data/ks.sqlite3
+      # Ключ доступа к /api/**: задайте его в файле .env рядом с этим файлом
+      KS_API_KEY: ${KS_API_KEY:-}
+    volumes:
+      - ks-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  ks-data:

@@ -1,0 +1,25 @@
+# Blueprint для Render: https://dashboard.render.com/blueprints
+# Подключите репозиторий — Render соберёт Dockerfile и поднимет сервис.
+services:
+  - type: web
+    name: ks-service
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    envVars:
+      # На бесплатном плане диск недоступен, поэтому база живёт во временном
+      # каталоге и очищается при перезапуске — для тестового стенда этого хватает.
+      - key: KS_DATABASE_PATH
+        value: /tmp/ks.sqlite3
+      # Ключ доступа к /api/**. Render сгенерирует значение при создании сервиса,
+      # посмотреть его можно в разделе Environment.
+      - key: KS_API_KEY
+        generateValue: true
+
+# Постоянное хранение документов (план starter и выше): замените plan на starter,
+# верните KS_DATABASE_PATH=/data/ks.sqlite3 и раскомментируйте блок disk.
+#    disk:
+#      name: ks-data
+#      mountPath: /data
+#      sizeGB: 1
