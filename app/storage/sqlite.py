@@ -14,6 +14,7 @@ from typing import Iterator
 
 from app.domain.errors import NotFoundError
 from app.domain.models import KS2Act, KS3Certificate
+from app.storage.base import DocumentRepository
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS acts (
@@ -48,8 +49,8 @@ CREATE INDEX IF NOT EXISTS idx_certificates_period ON certificates (period_end);
 """
 
 
-class DocumentRepository:
-    """CRUD для актов КС-2 и справок КС-3."""
+class SQLiteRepository(DocumentRepository):
+    """Документы в локальном файле SQLite."""
 
     def __init__(self, database: str | Path) -> None:
         self.database = str(database)
@@ -117,13 +118,6 @@ class DocumentRepository:
         if row is None:
             raise NotFoundError(f"Акт КС-2 {act_id} не найден")
         return KS2Act.model_validate_json(row["payload"])
-
-    def get_acts(self, act_ids: list[str]) -> list[KS2Act]:
-        """Возвращает акты в порядке переданных идентификаторов."""
-        found = {}
-        for act_id in dict.fromkeys(act_ids):
-            found[act_id] = self.get_act(act_id)
-        return [found[act_id] for act_id in dict.fromkeys(act_ids)]
 
     def list_acts(
         self,

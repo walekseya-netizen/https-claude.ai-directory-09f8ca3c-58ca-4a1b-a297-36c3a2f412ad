@@ -11,7 +11,7 @@ from app.api.http import XLSX_RESPONSES, xlsx_response
 from app.domain.calc import build_act
 from app.domain.models import KS2Act, KS2Input
 from app.export.xlsx_ks2 import render_ks2
-from app.storage.repository import DocumentRepository
+from app.storage.base import DocumentRepository
 
 router = APIRouter(prefix="/api/v1/ks2", tags=["КС-2"])
 

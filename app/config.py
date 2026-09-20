@@ -12,6 +12,8 @@ class Settings:
     """Конфигурация приложения."""
 
     database_path: str = "data/ks.sqlite3"
+    database_url: str = ""
+    """Строка подключения к PostgreSQL. Если задана, SQLite не используется."""
     title: str = "Сервис формирования КС-2 и КС-3"
     version: str = "1.0.0"
     api_key: str = ""
@@ -22,6 +24,7 @@ class Settings:
 def get_settings() -> Settings:
     return Settings(
         database_path=os.getenv("KS_DATABASE_PATH", Settings.database_path),
+        database_url=os.getenv("KS_DATABASE_URL", Settings.database_url),
         title=os.getenv("KS_APP_TITLE", Settings.title),
         version=os.getenv("KS_APP_VERSION", Settings.version),
         api_key=os.getenv("KS_API_KEY", Settings.api_key),

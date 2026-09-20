@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from fastapi import Request
 
-from app.storage.repository import DocumentRepository
+from app.storage.base import DocumentRepository
 
 
 def get_repository(request: Request) -> DocumentRepository:

@@ -11,7 +11,7 @@ from app.api.http import XLSX_RESPONSES, xlsx_response
 from app.domain.calc import build_certificate, build_certificate_from_acts
 from app.domain.models import KS3Certificate, KS3FromActs, KS3Input
 from app.export.xlsx_ks3 import render_ks3
-from app.storage.repository import DocumentRepository
+from app.storage.base import DocumentRepository
 
 router = APIRouter(prefix="/api/v1/ks3", tags=["КС-3"])
 

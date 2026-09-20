@@ -11,7 +11,7 @@ from app.api import health, ks2, ks3
 from app.api.security import api_key_middleware, api_key_scheme
 from app.config import Settings, get_settings
 from app.domain.errors import DomainError, NotFoundError
-from app.storage.repository import DocumentRepository
+from app.storage.factory import create_repository
 
 DESCRIPTION = """
 Формирование первичных документов строительного подряда:
@@ -32,7 +32,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(application: FastAPI):
-        application.state.repository = DocumentRepository(settings.database_path)
+        application.state.repository = create_repository(settings)
         try:
             yield
         finally:

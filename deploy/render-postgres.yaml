@@ -1,0 +1,29 @@
+# Вариант развёртывания на Render с постоянной базой PostgreSQL.
+# Применение: скопировать поверх render.yaml, закоммитить и запушить —
+#   cp deploy/render-postgres.yaml render.yaml
+# Render подхватит изменение и пересоберёт сервис, документы переживут перезапуски.
+databases:
+  - name: ks-db
+    plan: free
+    region: frankfurt
+
+services:
+  - type: web
+    name: ks-service
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    envVars:
+      # Строка подключения подставляется Render автоматически
+      - key: KS_DATABASE_URL
+        fromDatabase:
+          name: ks-db
+          property: connectionString
+      - key: KS_API_KEY
+        generateValue: true
+
+# Бесплатная база Render живёт 30 дней, после чего удаляется. Для постоянной
+# работы: план starter у базы, либо внешний PostgreSQL (Neon, Supabase, свой
+# сервер) — тогда блок databases не нужен, а в KS_DATABASE_URL вписывается
+# строка подключения этой базы.
